@@ -1,6 +1,9 @@
 package opmap
 
-import "fmt"
+import (
+	"fmt"
+	"sync"
+)
 
 // panic_add_key_to_nil_map
 func addKey2NilMap() {
@@ -19,4 +22,17 @@ func mapInterface() {
 		3:        3,
 	}
 	_ = panicMap
+}
+
+func concurrentMapPanic() {
+	m := make(map[int]int)
+	wg := sync.WaitGroup{}
+	for i := 0; i < 10; i++ {
+		wg.Add(1)
+		go func(i int) {
+			defer wg.Done()
+			m[i] = i // panic: concurrent map writes
+		}(i)
+	}
+	wg.Wait()
 }
