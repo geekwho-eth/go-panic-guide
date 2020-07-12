@@ -3,17 +3,19 @@
 // shouldn't occur during normal operation, or that we
 // aren't prepared to handle gracefully.
 
-package main
+package panicking
 
 import "os"
 
-func main() {
+func goPanic() {
 
 	// We'll use panic throughout this site to check for
 	// unexpected errors. This is the only program on the
 	// site designed to panic.
 	panic("a problem")
+}
 
+func createFilePanic() {
 	// A common use of panic is to abort if a function
 	// returns an error value that we don't know how to
 	// (or want to) handle. Here's an example of
